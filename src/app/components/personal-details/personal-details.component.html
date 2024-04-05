@@ -1,0 +1,64 @@
+<p *ngIf="errorMessage.length!=0" class="text-danger">{{errorMessage}}</p>
+<div *ngIf="(userLoginOn && !editMode) || !userLoginOn">
+    <p><b> Nombre: </b> {{user?.nombres}} </p>
+    <p><b> Apellido: </b> {{user?.apellidos}}</p>
+    <p><b> Identificación: </b> {{user?.identificacion}}</p>
+    <p><b> Fecha de nacimiento: </b> {{user?.fechaNcimiento}}</p>
+    <button *ngIf="userLoginOn && !editMode" (click)="editMode=true"  class="btn btn-dark"><img
+        src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
+        width="8%" alt="editar" />Editar Datos Personales</button>
+</div>
+
+<form *ngIf="userLoginOn && editMode" [formGroup]="registerForm" >
+    <div class="form-group row">
+        <label for="inputNombres" class="col-sm-1 col-form-label">Nombre</label>
+        <div class="col-sm-11">
+        <input type="text" formControlName="nombres" class="form-control" id="inputNombres">
+        
+            <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="text-danger">
+                <div *ngIf="nombres.errors?.['required']">
+                    El Nombre es requerido.
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputApellidos" class="col-sm-1 col-form-label">Apellido</label>
+        <div class="col-sm-11">
+        <input type="text" formControlName="apellidos" class="form-control" id="inputApellidos">
+        <div *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)" class="text-danger">
+            <div *ngIf="apellidos.errors?.['required']">
+                El Apellido es requerido.
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="form-group row border-bottom pb-3" >
+        <label for="inputIdentificacion" class="col-sm-1 col-form-label">País</label>
+        <div class="col-sm-11">
+        <input type="text" formControlName="identificacion" class="form-control" id="inputIdentificacion" >
+        <div *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)" class="text-danger">
+            <div *ngIf="identificacion.errors?.['required']">
+                La identificacion es requerido.
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputFechaNcimiento" class="col-sm-1 col-form-label">Fecha Nacimiento</label>
+        <div class="col-sm-11">
+        <input type="date" formControlName="fechaNcimiento" class="form-control" id="inputFechaNcimiento">
+        
+            <div *ngIf="fechaNcimiento.invalid && (fechaNcimiento.dirty || fechaNcimiento.touched)" class="text-danger">
+                <div *ngIf="fechaNcimiento.errors?.['required']">
+                    La fecha de nacimiento es requerido.
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+  
+    <button type="submit" (click)="savePersonalDetailsData()"  class="btn btn-dark mt-3">Guardar</button>
+    <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
+</form>
